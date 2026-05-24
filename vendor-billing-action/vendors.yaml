@@ -1,0 +1,34 @@
+# vendors.yaml — declared vendor roster.
+#
+# `mode: test` keeps the worker in read-only / record-only mode.
+# `mode: live` enables real billing actions through the adapter layer.
+# All live actions also require --prod CLI flag.
+
+mode: test
+
+vendors:
+  # ── Example: vendor with live API integration ─────────────────────────
+  - id: my_hosting_provider
+    display_name: "Acme Hosting"
+    vendor_type: hosting
+    adapter: liquid_web          # use the Liquid Web adapter (LW API)
+    contact_email: "billing@acme-hosting.com"
+    portal_url: "https://billing.acme-hosting.com/"
+    monthly_cost_usd: 250.00
+    currency: USD
+    autopay: true
+    next_renewal: "2026-06-15"
+    notes: |
+      Critical-path infrastructure — losing this kills my stack.
+
+  # ── Example: vendor without live API (record-only) ────────────────────
+  - id: my_email_service
+    display_name: "Some Email Service"
+    vendor_type: messaging
+    adapter: generic              # no live API; record-only
+    contact_email: "billing@email-service.com"
+    monthly_cost_usd: 50.00
+    autopay: true
+    next_renewal: "2026-06-22"
+    notes: |
+      Adapter not written yet. Track manually via record-payment.

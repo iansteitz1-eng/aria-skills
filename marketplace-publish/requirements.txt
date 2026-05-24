@@ -1,0 +1,5 @@
+PyYAML>=6.0
+
+# External tools (install separately, not via pip):
+# - vsce: npm install -g @vscode/vsce
+# - eas-cli: npm install -g eas-cli

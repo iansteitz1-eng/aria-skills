@@ -19,8 +19,12 @@ aria stripe-sync --apply --prod --write-env
 | [**stripe-sync**](./stripe-sync/) | Stripe dashboard: products + prices | 30-60 min |
 | [**cloudflare-dns-deploy**](./cloudflare-dns-deploy/) | Cloudflare dashboard + nginx + certbot ceremony | 15-30 min |
 | [**el-agent-deploy**](./el-agent-deploy/) | ElevenLabs ConvAI dashboard: tools + system prompts + phone bindings | 10-20 min |
+| [**marketplace-publish**](./marketplace-publish/) | `vsce` + Expo EAS submit ceremony across 3 marketplaces | 20-40 min per release |
+| [**partnership-email-blast**](./partnership-email-blast/) | Manual partner outreach: per-recipient personalization + tracking | 1+ hours per campaign |
+| [**vendor-billing-action**](./vendor-billing-action/) | Spreadsheet + scattered vendor portals; triple-gated live payments | 30+ min per renewal |
+| [**sprint-scaffold**](./sprint-scaffold/) | The meta-skill: Filing Cabinet + Flowstate scaffolding for new sprints | n/a (workflow pattern) |
 
-More skills shipping as we build them — partnership-email-blast, marketplace-publish, vendor-billing-action, splat audit log, etc. Track at [downloads.ariacode.io/skills](https://downloads.ariacode.io/skills/).
+More skills shipping as we build them. Track at [downloads.ariacode.io/skills](https://downloads.ariacode.io/skills/).
 
 ## The pattern (why this exists)
 
