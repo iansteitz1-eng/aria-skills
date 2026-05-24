@@ -1,0 +1,39 @@
+# el_agents.yaml — declared ElevenLabs ConvAI agent catalog.
+#
+# Pattern:
+#   - Each agent has a `slug` (your internal id) + `agent_id` (EL's)
+#   - `tool_ids_required` lists tool NAMES (resolved to IDs via EL catalog at runtime)
+#   - `system_prompt_blocks` are marker-gated appends — idempotent on re-run
+#   - Optional `deploy_gate` requires explicit --override-gate to apply
+#
+# Env vars required:
+#   ELEVENLABS_API_KEY — from elevenlabs.io account settings
+
+agents:
+  - slug: main_agent
+    agent_id: agent_XXXXXXXXXXXXXXXXXXXX
+    role: "Public-facing voice agent"
+    tool_ids_required:
+      - check_call_time_remaining  # example tool that must exist in EL tool catalog
+    system_prompt_blocks:
+      - marker: "## Time-remaining awareness"
+        body: |
+          ## Time-remaining awareness
+
+          Your call has a hard time cap. Every 60-90 seconds during the call, silently
+          call the check_call_time_remaining tool with whatever identifiers you have
+          ({{system__call_sid}}, {{system__conversation_id}}, {{system__caller_id}}).
+
+          When the tool responds:
+            - If should_warn = true: IMMEDIATELY interrupt your current thought politely
+              and speak the warning_text verbatim. Then return to the user's last topic.
+            - If should_warn = false: do nothing visible. Continue normally.
+
+          Do not announce that you're checking the time. The tool is silent infrastructure.
+
+  - slug: secondary_agent
+    agent_id: agent_YYYYYYYYYYYYYYYYYYYY
+    role: "Separate brand / product — voice-lane-gated"
+    tool_ids_required: []
+    system_prompt_blocks: []
+    deploy_gate: voice_lane_signoff   # requires --override-gate to apply

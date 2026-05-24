@@ -1,0 +1,44 @@
+# dns_records.yaml — declared Cloudflare DNS catalog.
+#
+# Pattern:
+#   - Each `zone` block declares one Cloudflare zone (must exist in your account)
+#   - Each record matched by (zone, type, name); idempotent on re-run
+#   - Optional `server_setup` block runs nginx + certbot for records pointing at this server
+#
+# Env vars required:
+#   CLOUDFLARE_API_TOKEN — scoped Token with Zone:Read + DNS:Edit on the listed zones
+
+# Server IP behind `point_at: this_server`. Override per-record with `content:`.
+server_ip: 50.28.69.120
+
+# Email for certbot --agree-tos --email
+certbot_email: ops@example.com
+
+zones:
+  - zone: example.com
+    records:
+      # ── Example: subdomain pointing at this server, with HTTPS bootstrap ──
+      - type: A
+        name: downloads
+        point_at: this_server   # → server_ip
+        proxied: false          # grey-cloud (required for Let's Encrypt HTTP-01)
+        # server_setup runs only with --server-setup CLI flag.
+        # It expects the nginx site config to already exist in sites-available.
+        server_setup:
+          nginx_site: /etc/nginx/sites-available/downloads.example.com
+          enable_https: true
+
+      # ── Example: CNAME for vendor service ──────────────────────────────
+      - type: CNAME
+        name: mail
+        content: spf.example-mailservice.com
+        proxied: false
+        ttl: 600
+
+      # ── Example: TXT record for SPF / DKIM / verification ──────────────
+      - type: TXT
+        name: "@"
+        content: "v=spf1 include:_spf.example-mailservice.com ~all"
+        ttl: 600
+
+  # Add more zones here. Each zone must already exist in your Cloudflare account.

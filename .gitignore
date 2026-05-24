@@ -1,0 +1,29 @@
+# Never commit secrets
+.env
+.env.*
+*.key
+*.pem
+*-secret.yaml
+*-secret.json
+
+# Local config overrides (use *.yaml.example as templates)
+**/local.yaml
+**/local.*.yaml
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.python-version
+
+# Logs / runs
+*.log
+*.out
+.cache/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/

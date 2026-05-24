@@ -1,0 +1,43 @@
+# stripe_products.yaml — declared catalog reconciled to Stripe by stripe-sync.
+#
+# Pattern:
+#   - Each product has a `sku` (your internal id; becomes Stripe metadata.aria_sku)
+#   - Each product has one or more `prices` with `env_var` (the variable name the
+#     resolved price ID writes to)
+#   - Re-runs match by sku → no duplicates
+#
+# Mode:
+#   `test` uses STRIPE_SECRET_KEY_TEST (sk_test_...)
+#   `live` uses STRIPE_SECRET_KEY_LIVE (sk_live_...) — and requires --prod flag
+
+mode: test
+
+products:
+  # ── Example: SaaS subscription with monthly + annual prices ───────────
+  - sku: pro
+    name: "Acme Pro"
+    description: "Pro tier subscription"
+    prices:
+      - env_var: STRIPE_PRICE_PRO_MONTHLY
+        unit_amount_cents: 2500
+        currency: usd
+        recurring:
+          interval: month
+          interval_count: 1
+      - env_var: STRIPE_PRICE_PRO_ANNUAL
+        unit_amount_cents: 25000  # 20% annual discount: $25 × 10 months
+        currency: usd
+        recurring:
+          interval: year
+          interval_count: 1
+
+  # ── Example: One-time purchase ────────────────────────────────────────
+  - sku: course_x
+    name: "Course X"
+    description: "One-time digital product"
+    prices:
+      - env_var: STRIPE_PRICE_COURSE_X
+        unit_amount_cents: 49700
+        currency: usd
+
+  # Add more products here. Each new product = new sku. Idempotent on re-run.
