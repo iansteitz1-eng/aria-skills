@@ -13,7 +13,7 @@ I automated everything I used to do in Stripe / Cloudflare / ElevenLabs dashboar
 Open-sourcing the pattern as Claude Code Skills.
 
 3 skills shipping today, more on the way:
-github.com/insynctech/aria-skills
+github.com/iansteitz1-eng/aria-skills
 
 🧵 how they work + why this is the right shape for agentic AI ↓
 ```
@@ -92,7 +92,7 @@ Hosted: staycool.ai/aria-code, BYOK, free tier.
 
 ### Tweet 8 (CTA)
 ```
-Repo: github.com/insynctech/aria-skills
+Repo: github.com/iansteitz1-eng/aria-skills
 Docs + landing: downloads.ariacode.io/skills
 Hosted: staycool.ai/aria-code
 
@@ -129,7 +129,7 @@ I built a small collection of Claude Code Skills that replace dashboard work I w
 
 The pattern is the same shape Terraform / Pulumi use for cloud infra — declared-intent YAML, reconcile loop, idempotent re-runs, --dry-run by default, explicit --prod for live mode. The novelty is packaging it as Claude Skills so an LLM can drive it on your behalf.
 
-Repo: https://github.com/insynctech/aria-skills
+Repo: https://github.com/iansteitz1-eng/aria-skills
 
 A few safety patterns I'd be curious for feedback on:
 
@@ -165,7 +165,7 @@ Each one replaces ~15-45 min of dashboard clicking with a one-command CLI flow:
 
 Same pattern across all three: declared-intent YAML, reconcile loop, --dry-run default, --prod for live.
 
-Repo: github.com/insynctech/aria-skills (Apache 2.0)
+Repo: github.com/iansteitz1-eng/aria-skills (Apache 2.0)
 Landing: downloads.ariacode.io/skills
 
 If you've been clicking through these dashboards too — try the skills, lmk what breaks.

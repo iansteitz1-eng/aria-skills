@@ -42,7 +42,7 @@ This isn't novel infrastructure — it's the Terraform / Pulumi pattern applied 
 ## Install
 
 ```sh
-git clone https://github.com/insynctech/aria-skills ~/aria-skills
+git clone https://github.com/iansteitz1-eng/aria-skills ~/aria-skills
 
 # Link the skills you want into Claude Code's skill directory:
 ln -s ~/aria-skills/stripe-sync ~/.claude/skills/stripe-sync
@@ -101,6 +101,6 @@ PRs welcome. Especially: new skills for vendors we haven't covered (Linear, Noti
 
 ## Contact
 
-- **Issues / questions:** [GitHub Issues](https://github.com/insynctech/aria-skills/issues)
+- **Issues / questions:** [GitHub Issues](https://github.com/iansteitz1-eng/aria-skills/issues)
 - **Aria Code SaaS:** [staycool.ai/aria-code](https://staycool.ai/aria-code)
 - **Builder:** [@iansteitz](https://twitter.com/iansteitz) / [InSync Tech](https://insynctech.io)
