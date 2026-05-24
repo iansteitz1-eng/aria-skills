@@ -1,0 +1,2 @@
+# aria-skill-test has no external runtime deps — pure Python stdlib
+# (subprocess + argparse + pathlib + re + time)

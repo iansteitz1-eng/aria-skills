@@ -1,0 +1,1 @@
+# aria-skill-template has no runtime deps — pure Python stdlib for scaffolding

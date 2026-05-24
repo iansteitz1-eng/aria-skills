@@ -61,10 +61,14 @@ except ImportError:
     sys.exit(1)
 
 API_KEY = os.environ.get("ELEVENLABS_API_KEY")
-if not API_KEY:
-    sys.stderr.write("FATAL: ELEVENLABS_API_KEY not in env.\n")
-    sys.exit(1)
 BASE = "https://api.elevenlabs.io/v1/convai"
+
+
+def _require_api_key() -> str:
+    if not API_KEY:
+        sys.stderr.write("FATAL: ELEVENLABS_API_KEY not in env.\n")
+        sys.exit(1)
+    return API_KEY
 
 
 def _load_config(path: Path) -> dict:
@@ -253,9 +257,7 @@ def _provision_phone(
     body = r.json()
     pid = body.get("phone_number_id") or body.get("id") or body.get("phone_id")
     print(f"# bound Twilio {phone_number} to agent {slug}; EL phone_number_id={pid}")
-    print(
-        f"# paste the next line into .env, then restart aria-outbound-caller:"
-    )
+    print(f"# paste the next line into .env, then restart aria-outbound-caller:")
     print(f"EL_AGENT_PHONE_NUMBER_ID={pid}")
     return 0
 
@@ -305,6 +307,7 @@ def main() -> int:
         help="Label for the bound phone number",
     )
     args = ap.parse_args()
+    _require_api_key()
 
     cfg = _load_config(Path(args.config))
 

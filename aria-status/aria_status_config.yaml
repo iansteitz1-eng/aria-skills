@@ -1,0 +1,23 @@
+# aria-status example config — copy + edit for your stack.
+
+# Regex patterns matched against `systemctl list-timers` output.
+timer_patterns:
+  - "\\bmyapp"
+  - "\\bbackup"
+
+# Label → URL. Probed in parallel with 3s timeout.
+healthz:
+  api:       "http://127.0.0.1:8080/health"
+  worker:    "http://127.0.0.1:8081/healthz"
+
+# Disk mounts to report (default: ["/"])
+disk_mounts:
+  - "/"
+
+# Optional shell commands. {name, cmd, timeout?, parse_json?}
+commands:
+  # - name: "open files"
+  #   cmd: ["sh", "-c", "ls /proc/$$/fd | wc -l"]
+  # - name: "queue depth"
+  #   cmd: ["curl", "-s", "http://127.0.0.1:8080/queue.json"]
+  #   parse_json: true
