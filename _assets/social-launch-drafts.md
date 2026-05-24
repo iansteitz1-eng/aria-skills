@@ -1,4 +1,4 @@
-# Social launch drafts — `insynctech/aria-skills`
+# Social launch drafts — `iansteitz1-eng/aria-skills`
 
 Hold these until the GitHub repo is actually public + the `/skills/` landing page is reachable. Then post manually from Ian's accounts. Don't auto-fire.
 
