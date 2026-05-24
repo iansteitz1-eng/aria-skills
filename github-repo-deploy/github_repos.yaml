@@ -1,0 +1,60 @@
+# github-repo-deploy example — Ian's public InSync Tech surface.
+#
+# Edit + run `python3 github_repo_deploy.py` (dry-run) to see drift.
+# Then `--apply --prod` to reconcile.
+
+owner: iansteitz1-eng
+
+repos:
+  - name: aria-skills
+    description: "Open-source Claude Code Skills that replace clicking through vendor dashboards — Stripe, Cloudflare DNS, ElevenLabs, GitHub, and more. Powered by Aria Code."
+    homepage: "https://staycool.ai/aria-code"
+    topics:
+      - claude-code
+      - claude-skills
+      - anthropic
+      - automation
+      - devtools
+      - aria-code
+      - insynctech
+      - yaml-reconcile
+      - stripe
+      - cloudflare
+
+  - name: aria-thesis
+    description: "Wall-clock latency and continuity research: the missing data layer for AI receptionist agents — published as part of the Aria Code thesis."
+    homepage: "https://staycool.ai/aria-code"
+    topics:
+      - ai-research
+      - voice-agents
+      - latency
+      - control-monitoring
+      - anthropic-fellows-2026
+
+  - name: splat-schema
+    description: "Splat is a hash-chained per-action audit log for AI agents — every read, write, decision, and side-effect emits a tamper-evident record. Schema, sample emitters, doctrine."
+    homepage: "https://staycool.ai/aria-code"
+    topics:
+      - ai-safety
+      - audit-log
+      - hash-chain
+      - control-monitoring
+      - alignment
+      - data-layer
+
+  - name: fellows-2026
+    description: "Public artifacts for Ian Steitz's Anthropic Fellows 2026 application — research direction, mentor-fit memo, prior work links."
+    homepage: "https://www.anthropic.com/fellows-program"
+    topics:
+      - anthropic-fellows
+      - alignment-research
+      - ai-safety
+
+  - name: certusordo
+    description: "CertusOrdo — the doctrine governing Aria's sovereign reasoning, vortex 3·6·9 lattice, six-philosopher scoring rubric, encouragement operator. The constitution behind the agent."
+    homepage: "https://staycool.ai/aria-code"
+    topics:
+      - ai-doctrine
+      - agent-governance
+      - alignment
+      - sovereignty
