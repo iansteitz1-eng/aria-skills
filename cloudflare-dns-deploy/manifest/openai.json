@@ -1,0 +1,37 @@
+{
+  "type": "function",
+  "function": {
+    "name": "cloudflare_dns_deploy",
+    "description": "Reconcile DNS records from a declared YAML catalog to Cloudflare via the API, and optionally run the companion nginx + certbot bootstrap for records pointing at your server. Idempotent. --dry-run by default, --apply hits the API, --server-setup also wires nginx + obtains Let's Encrypt cert. Use when the user says \"deploy DNS\", \"add a subdomain\", \"stand up <X>.example.com\", or before any subdomain launch.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "string",
+          "description": "Path to the dns_records.yaml catalog."
+        },
+        "apply": {
+          "type": "boolean",
+          "description": "Hit the Cloudflare API; default is dry-run.",
+          "default": false
+        },
+        "server_setup": {
+          "type": "boolean",
+          "description": "Also run nginx + certbot bootstrap for the record.",
+          "default": false
+        }
+      },
+      "required": []
+    }
+  },
+  "_aria_meta": {
+    "harness": "openai",
+    "compatible_with": [
+      "openai-gpt",
+      "openai-codex",
+      "xai-grok"
+    ],
+    "skill_name": "cloudflare-dns-deploy",
+    "source_of_truth": "../SKILL.md"
+  }
+}

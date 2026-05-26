@@ -1,0 +1,45 @@
+{
+  "name": "stripe-sync",
+  "description": "Reconcile Stripe products + prices from a declared YAML catalog. Idempotent. dry-run by default, --apply hits the API, --prod required for live mode.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "string",
+        "description": "Path to the YAML catalog file. Defaults to /opt/aria/config/stripe_products.yaml.",
+        "default": "/opt/aria/config/stripe_products.yaml"
+      },
+      "apply": {
+        "type": "boolean",
+        "description": "Apply changes against Stripe. If false, runs as dry-run and prints the diff.",
+        "default": false
+      },
+      "prod": {
+        "type": "boolean",
+        "description": "Required when the YAML config sets mode=live. Refuses to hit the live API without this explicit flag.",
+        "default": false
+      },
+      "write_env": {
+        "type": "boolean",
+        "description": "Merge resolved {env_var: price_id} pairs back into /opt/aria/.env. Requires apply=true.",
+        "default": false
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "script": "stripe_sync.py",
+    "invocation": "python3 stripe_sync.py {args_as_flags}",
+    "skill_repo": "https://github.com/iansteitz1-eng/aria-skills",
+    "source_of_truth": "../SKILL.md"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "type": "function",
+  "function": {
+    "name": "stripe_sync",
+    "description": "Reconcile Stripe products + prices from a declared YAML catalog. Idempotent. Defaults to dry-run; --apply hits the API; --prod required for live mode; --write-env merges resolved price IDs into .env. One-command alternative to clicking through the Stripe dashboard.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "string",
+          "description": "Path to the YAML catalog file. Defaults to /opt/aria/config/stripe_products.yaml.",
+          "default": "/opt/aria/config/stripe_products.yaml"
+        },
+        "apply": {
+          "type": "boolean",
+          "description": "Apply changes against Stripe. If false, runs as dry-run and prints the diff. Defaults to false.",
+          "default": false
+        },
+        "prod": {
+          "type": "boolean",
+          "description": "Required when the YAML config sets mode=live. Refuses to hit the live API without this explicit flag. Safety gate.",
+          "default": false
+        },
+        "write_env": {
+          "type": "boolean",
+          "description": "Merge resolved {env_var: price_id} pairs back into /opt/aria/.env. Requires apply=true.",
+          "default": false
+        }
+      },
+      "required": []
+    }
+  },
+  "_aria_meta": {
+    "harness": "openai",
+    "compatible_with": ["openai-gpt", "openai-codex", "xai-grok"],
+    "script": "stripe_sync.py",
+    "invocation": "python3 stripe_sync.py {args_as_flags}",
+    "skill_repo": "https://github.com/iansteitz1-eng/aria-skills",
+    "source_of_truth": "../SKILL.md"
+  }
+}

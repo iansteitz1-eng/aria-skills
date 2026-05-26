@@ -1,0 +1,57 @@
+{
+  "type": "function",
+  "function": {
+    "name": "vendor_billing_action",
+    "description": "Unified vendor billing surface \u2014 sync a YAML vendor roster, snapshot status, list upcoming renewals, record manual payments, and (for vendors with an adapter) fetch live balance or trigger a live payment. TRIPLE-GATED on live payments (--apply AND --prod AND --confirm-amount must match) because money cannot be un-moved. Use when the user says \"vendor status\", \"what bills are coming up\", \"record that I paid X\", \"pay X\", \"renewal check\", or \"vendor sync\".",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "string",
+          "description": "Path to vendors.yaml roster."
+        },
+        "apply": {
+          "type": "boolean",
+          "description": "Apply (sync DB / record payment / etc.); default is dry-run.",
+          "default": false
+        },
+        "prod": {
+          "type": "boolean",
+          "description": "Required for live payments.",
+          "default": false
+        },
+        "amount": {
+          "type": "number",
+          "description": "Payment amount in major units (e.g., 49.95)."
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code (e.g., USD)."
+        },
+        "confirm_amount": {
+          "type": "number",
+          "description": "Must match --amount exactly for live payments (third gate)."
+        },
+        "days": {
+          "type": "integer",
+          "description": "Window for upcoming-renewal queries."
+        },
+        "ref": {
+          "type": "string",
+          "description": "Idempotency reference for the payment."
+        }
+      },
+      "required": []
+    }
+  },
+  "_aria_meta": {
+    "harness": "openai",
+    "compatible_with": [
+      "openai-gpt",
+      "openai-codex",
+      "xai-grok"
+    ],
+    "skill_name": "vendor-billing-action",
+    "source_of_truth": "../SKILL.md"
+  }
+}

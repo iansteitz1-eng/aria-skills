@@ -1,0 +1,40 @@
+{
+  "name": "partnership-email-blast",
+  "description": "Send per-partner email campaigns from a YAML roster through Resend, rendered via a clean HTML template. YAML is canonical; each partner gets one templated email with {{var}} substitution. Idempotent \u2014 re-runs skip partners already sent (unique index on campaign_id + partner_id WHERE ok=true). --dry-run by default, --apply sends, --prod required for live mode. Use when the user says \"blast the partners\", \"fire the launch email\", \"email the partner list\", \"outreach campaign\", or before a launch announcement.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "string",
+        "description": "Path to partnerships.yaml roster."
+      },
+      "apply": {
+        "type": "boolean",
+        "description": "Actually send emails; default is dry-run.",
+        "default": false
+      },
+      "prod": {
+        "type": "boolean",
+        "description": "Live mode confirmation.",
+        "default": false
+      },
+      "campaign": {
+        "type": "string",
+        "description": "Campaign slug for idempotency tracking."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}

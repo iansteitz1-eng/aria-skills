@@ -1,0 +1,37 @@
+{
+  "function_declarations": [
+    {
+      "name": "aria_status",
+      "description": "Config-driven one-screen status of a server stack \u2014 systemd timers, healthz endpoints, disk usage, GPU memory/util (if nvidia-smi present), and optional custom shell-command probes. All probes run in parallel with short timeouts; graceful degradation if any single check fails. Read-only by design. Text output by default; --json for machine-readable, --brief for one-screen. Use at session start, before a deploy, or when the user says \"status\", \"how are things\", \"any issues\".",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "brief": {
+            "type": "boolean",
+            "description": "5-line summary instead of full report.",
+            "default": false
+          },
+          "json": {
+            "type": "boolean",
+            "description": "Emit machine-readable JSON.",
+            "default": false
+          },
+          "config": {
+            "type": "string",
+            "description": "Path to the status checks YAML config."
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "_aria_meta": {
+    "harness": "google-gemini",
+    "compatible_with": [
+      "gemini-1.5",
+      "gemini-2.x"
+    ],
+    "skill_name": "aria-status",
+    "source_of_truth": "../SKILL.md"
+  }
+}

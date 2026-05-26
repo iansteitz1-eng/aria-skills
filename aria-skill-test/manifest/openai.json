@@ -1,0 +1,39 @@
+{
+  "type": "function",
+  "function": {
+    "name": "aria_skill_test",
+    "description": "Regression harness for the aria-skills repo. Runs every shipped skill in dry-run mode + asserts clean output (no traceback, no credential leaks, valid SKILL.md frontmatter, README.md present). Text report by default; --junit-xml flag for CI integration. Use when the user says \"test the skills\", \"regression check\", \"before push\", \"run the test harness\", or any time before opening a PR or pushing to main.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "skill": {
+          "type": "string",
+          "description": "Test only one named skill (skip the rest)."
+        },
+        "junit_xml": {
+          "type": "string",
+          "description": "Emit JUnit XML to this path for CI consumption."
+        },
+        "repo_root": {
+          "type": "string",
+          "description": "Alternate root containing the skills/ tree."
+        },
+        "skip": {
+          "type": "string",
+          "description": "Skill name to exclude (repeatable in the CLI; pass comma-separated here)."
+        }
+      },
+      "required": []
+    }
+  },
+  "_aria_meta": {
+    "harness": "openai",
+    "compatible_with": [
+      "openai-gpt",
+      "openai-codex",
+      "xai-grok"
+    ],
+    "skill_name": "aria-skill-test",
+    "source_of_truth": "../SKILL.md"
+  }
+}

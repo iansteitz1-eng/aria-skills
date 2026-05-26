@@ -1,0 +1,35 @@
+{
+  "name": "el-agent-deploy",
+  "description": "Declarative ElevenLabs ConvAI agent reconciler. Reads el_agents.yaml and PATCHes the live agents to ensure each has the declared tool_ids attached + the declared system-prompt blocks appended (marker-gated, idempotent). Optional --provision-phone binds an existing Twilio number to an agent. Use when the user says \"deploy el agent\", \"wire the tool\", \"update agent system prompt\", \"reconcile el agents\", or before any agent-config change ships.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "config": {
+        "type": "string",
+        "description": "Path to the agent config YAML."
+      },
+      "agent": {
+        "type": "string",
+        "description": "Agent name/id to deploy."
+      },
+      "apply": {
+        "type": "boolean",
+        "description": "Apply changes; default is dry-run.",
+        "default": false
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}

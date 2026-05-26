@@ -1,0 +1,35 @@
+{
+  "function_declarations": [
+    {
+      "name": "sprint_scaffold",
+      "description": "Scaffold a new Aria sprint folder with Filing Cabinet spec_charter.md + Flowstate .claude/agents/pr-review.md + reference/sql/ subdirs. Use when starting a new sprint (e.g. \"open sprint 021\", \"start a sprint for X\", \"new sprint folder\"). Drops a working skeleton in /opt/aria/v4/sprints/NNN_slug/ with all the load-bearing files pre-filled so every shipped item gets an audit-trail home. Validated in Sprint 020 (two-terminal push, 20+ items shipped under this pattern).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "sprint_number": {
+            "type": "string",
+            "description": "Three-digit sprint number (e.g., 056)."
+          },
+          "slug": {
+            "type": "string",
+            "description": "lowercase-hyphenated sprint slug."
+          },
+          "mission": {
+            "type": "string",
+            "description": "One-line mission for the sprint charter."
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "_aria_meta": {
+    "harness": "google-gemini",
+    "compatible_with": [
+      "gemini-1.5",
+      "gemini-2.x"
+    ],
+    "skill_name": "sprint-scaffold",
+    "source_of_truth": "../SKILL.md"
+  }
+}

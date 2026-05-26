@@ -1,0 +1,31 @@
+{
+  "name": "marketplace-publish",
+  "description": "Unified marketplace publisher for VS Code Marketplace (via vsce), iOS App Store / TestFlight (via Expo EAS submit), and Google Play Console (via Expo EAS submit). Single command surface around publish.sh + submit.sh. Pre-flight validates credentials before doing anything destructive. --dry-run by default skips uploads. Use when the user says \"publish the extension\", \"submit to App Store\", \"ship to Play Store\", \"marketplace publish\", \"release the vsix\", \"build and submit\", or before any app-store push.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "target": {
+        "type": "string",
+        "description": "Which marketplace: vscode | apple | google."
+      },
+      "dry_run": {
+        "type": "boolean",
+        "description": "Skip uploads; just validate inputs.",
+        "default": true
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}
