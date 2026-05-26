@@ -21,6 +21,7 @@ then fill in the vendor-specific reconcile logic. The two-flag prod gate,
 YAML-reconcile shape, and audit-via-splat hook are pre-wired.
 """
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -382,6 +383,144 @@ httpx>=0.24
 """
 
 
+def _default_manifest_description(name: str, vendor: str) -> str:
+    """Default cross-harness description for scaffolded skills.
+
+    Mirrors the YAML frontmatter description in render_skill_md() so all
+    four manifests stay in sync. After scaffolding, the builder edits both
+    SKILL.md and the manifest files when they specialize the resource_type.
+    """
+    return (
+        f"Reconcile <resource_type> from a declared YAML catalog to {vendor} via the API. "
+        f"Idempotent. dry-run by default, --apply hits the API, --prod required for live mode. "
+        f"Use when the user says 'sync {vendor}', 'update <resource>', or before any {vendor} change ships."
+    )
+
+
+def _default_args_schema() -> dict:
+    """Canonical 3-arg shape for scaffolded reconciler skills (config / apply / prod).
+
+    Builders who add extra flags must hand-edit the manifests in lockstep
+    with the python script's argparse block.
+    """
+    return {
+        "config": {"type": "string", "description": "Path to the YAML catalog."},
+        "apply": {
+            "type": "boolean",
+            "description": "Apply changes against the vendor API. Defaults to dry-run.",
+            "default": False,
+        },
+        "prod": {
+            "type": "boolean",
+            "description": "Required for live mode; refuses to hit the live API without it.",
+            "default": False,
+        },
+    }
+
+
+def render_openai_manifest(name: str, vendor: str) -> str:
+    fn_name = name.replace("-", "_")
+    description = _default_manifest_description(name, vendor)
+    obj = {
+        "type": "function",
+        "function": {
+            "name": fn_name,
+            "description": description,
+            "parameters": {
+                "type": "object",
+                "properties": _default_args_schema(),
+                "required": [],
+            },
+        },
+        "_aria_meta": {
+            "harness": "openai",
+            "compatible_with": ["openai-gpt", "openai-codex", "xai-grok"],
+            "skill_name": name,
+            "source_of_truth": "../SKILL.md",
+        },
+    }
+    return json.dumps(obj, indent=2) + "\n"
+
+
+def render_gemini_manifest(name: str, vendor: str) -> str:
+    fn_name = name.replace("-", "_")
+    description = _default_manifest_description(name, vendor)
+    obj = {
+        "function_declarations": [
+            {
+                "name": fn_name,
+                "description": description,
+                "parameters": {
+                    "type": "object",
+                    "properties": _default_args_schema(),
+                    "required": [],
+                },
+            }
+        ],
+        "_aria_meta": {
+            "harness": "google-gemini",
+            "compatible_with": ["gemini-1.5", "gemini-2.x"],
+            "skill_name": name,
+            "source_of_truth": "../SKILL.md",
+        },
+    }
+    return json.dumps(obj, indent=2) + "\n"
+
+
+def render_mcp_manifest(name: str, vendor: str) -> str:
+    description = _default_manifest_description(name, vendor)
+    obj = {
+        "name": name,
+        "description": description,
+        "inputSchema": {
+            "type": "object",
+            "properties": _default_args_schema(),
+            "required": [],
+            "additionalProperties": False,
+        },
+        "_aria_meta": {
+            "harness": "mcp",
+            "spec_version": "2024-11-05",
+            "compatible_with": [
+                "claude-desktop",
+                "claude-code",
+                "cursor",
+                "any-mcp-aware-client",
+            ],
+            "source_of_truth": "../SKILL.md",
+        },
+    }
+    return json.dumps(obj, indent=2) + "\n"
+
+
+def render_manifest_readme(name: str) -> str:
+    return f"""# {name} — Cross-Harness Manifests
+
+This directory holds discovery manifests for harnesses other than Claude Code. The Claude Code manifest is `../SKILL.md`. All four describe the SAME script — they're just discovery glue.
+
+## Manifest matrix
+
+| Harness | File | Format |
+|---|---|---|
+| Claude Code | `../SKILL.md` | YAML frontmatter |
+| OpenAI / Codex / xAI Grok | `openai.json` | OpenAI Tool/Function schema |
+| Google Gemini | `gemini.json` | `function_declarations` |
+| MCP | `mcp.json` | MCP tool spec (2024-11-05) |
+
+## Invocation contract
+
+The harness adapter translates harness-side function arguments → CLI flags → invokes `../{name.replace('-', '_')}.py`.
+
+When you add a CLI flag in the script, mirror it in all three manifests (the file shapes are nearly identical — same JSON Schema body, different wrappers).
+
+## Cross-references
+
+- `../SKILL.md` — Claude Code manifest, source of behavior truth
+- Path A pattern doc: `/opt/aria/v4/sprints/055_master_todo_triage/reference/platform_agnostic_skills.md`
+- Pilot reference: `aria-skills-repo/stripe-sync/manifest/`
+"""
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Scaffold a new aria-skills skill.")
     ap.add_argument(
@@ -406,6 +545,7 @@ def main() -> int:
         return 2
 
     dest.mkdir(parents=True, exist_ok=True)
+    (dest / "manifest").mkdir(parents=True, exist_ok=True)
 
     files = {
         "README.md": render_readme(name, snake_name, vendor),
@@ -413,6 +553,10 @@ def main() -> int:
         f"{snake_name}.py": render_script(name, snake_name, vendor),
         f"{snake_name}_config.yaml": render_yaml(name, snake_name, vendor),
         "requirements.txt": render_requirements(vendor),
+        "manifest/openai.json": render_openai_manifest(name, vendor),
+        "manifest/gemini.json": render_gemini_manifest(name, vendor),
+        "manifest/mcp.json": render_mcp_manifest(name, vendor),
+        "manifest/README.md": render_manifest_readme(name),
     }
     for filename, content in files.items():
         (dest / filename).write_text(content)
@@ -430,8 +574,11 @@ def main() -> int:
     print(f"  1. cd {dest}")
     print(f"  2. Edit {snake_name}_config.yaml — declare your resources")
     print(f"  3. Edit {snake_name}.py — replace the TODO stubs with vendor SDK calls")
-    print(f"  4. pip install -r requirements.txt")
-    print(f"  5. python3 {snake_name}.py    # dry-run to confirm the scaffold runs")
+    print(
+        f"  4. If you add CLI flags, mirror them in manifest/openai.json, gemini.json, mcp.json"
+    )
+    print(f"  5. pip install -r requirements.txt")
+    print(f"  6. python3 {snake_name}.py    # dry-run to confirm the scaffold runs")
     print()
     print("Then read ../BUILDER_GUIDE.md for the patterns.")
     return 0
