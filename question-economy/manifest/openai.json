@@ -1,0 +1,28 @@
+{
+  "type": "function",
+  "function": {
+    "name": "question_economy",
+    "description": "Analyze the questions Claude asked the user this session and the user's answers, distill generalizable answers into standing-default memories so the assistant asks fewer (only genuinely novel) questions over time, and append a per-session question-rate metric. Use at session close, when the user says \"wrap up\" / \"winding down\" / \"what did you learn about working with me\", or on request.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "type": "string",
+          "description": "Session id to analyze; defaults to the most recently modified transcript."
+        },
+        "print_trend": {
+          "type": "boolean",
+          "description": "Include the last 8 sessions' question-rate trend in the output.",
+          "default": true
+        }
+      },
+      "required": []
+    }
+  },
+  "_aria_meta": {
+    "harness": "openai",
+    "compatible_with": ["openai-gpt", "openai-codex", "xai-grok"],
+    "skill_name": "question-economy",
+    "source_of_truth": "../SKILL.md"
+  }
+}

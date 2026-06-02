@@ -23,6 +23,7 @@ aria stripe-sync --apply --prod --write-env
 | [**partnership-email-blast**](./partnership-email-blast/) | Manual partner outreach: per-recipient personalization + tracking | 1+ hours per campaign |
 | [**vendor-billing-action**](./vendor-billing-action/) | Spreadsheet + scattered vendor portals; triple-gated live payments | 30+ min per renewal |
 | [**sprint-scaffold**](./sprint-scaffold/) | The meta-skill: Filing Cabinet + Flowstate scaffolding for new sprints | n/a (workflow pattern) |
+| [**question-economy**](./question-economy/) | Re-answering the same preferences every session; Claude learns your defaults | compounds — fewer questions over time |
 
 More skills shipping as we build them. Track at [downloads.ariacode.io/skills](https://downloads.ariacode.io/skills/).
 
