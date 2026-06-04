@@ -1,0 +1,50 @@
+{
+  "function_declarations": [
+    {
+      "name": "session_cabinet",
+      "description": "Use when the user says \"file my sessions\", \"session archive\", \"where are my old sessions\", \"make my Claude history searchable\", \"organize my Claude Code transcripts\", \"I can't find that session from last week\", or \"index my Claude sessions\". Auto-files Claude Code session transcripts into a human-navigable date-anchored archive with semantic SESSION.md cards and searchable _INDEX.md tables. Idempotent. Stdlib only.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "dry_run": {
+            "type": "boolean",
+            "description": "Preview what would be filed without writing any files. Recommended on first run.",
+            "default": false
+          },
+          "verbose": {
+            "type": "boolean",
+            "description": "Print each session path as it is filed.",
+            "default": false
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Process at most this many sessions. Useful for testing on large histories."
+          },
+          "cabinet": {
+            "type": "string",
+            "description": "Path to the archive root directory. Defaults to ~/Desktop/Claude Code Sessions. Can also be set via CC_CABINET_DIR env var."
+          },
+          "tz": {
+            "type": "string",
+            "description": "UTC offset override for local time display, e.g. \"-05:00\" or \"+05:30\". Defaults to system local timezone."
+          },
+          "source_dir": {
+            "type": "string",
+            "description": "Path to an additional .claude/projects directory (e.g. from a server backup or external drive)."
+          },
+          "source_label": {
+            "type": "string",
+            "description": "Label for the additional source (e.g. 'server', 'mac-mini'). Shown in the Source column of indexes."
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "_aria_meta": {
+    "harness": "google-gemini",
+    "compatible_with": ["gemini-1.5", "gemini-2.x"],
+    "skill_name": "session-cabinet",
+    "source_of_truth": "../SKILL.md"
+  }
+}

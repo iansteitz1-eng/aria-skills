@@ -197,6 +197,14 @@ def _test_skill(skill_dir: Path) -> TestResult:
     if not (skill_dir / "README.md").exists():
         failures.append("Missing README.md")
 
+    # 3b. Cross-harness manifests present (discoverable beyond Claude Code).
+    #     Blanket rule: a skill ships manifest/{openai,gemini,mcp}.json or it fails.
+    #     Generate/refresh them with: skill-manifest-gen/gen_manifests.py
+    mdir = skill_dir / "manifest"
+    for mf in ("openai.json", "gemini.json", "mcp.json"):
+        if not (mdir / mf).exists():
+            failures.append(f"Missing manifest/{mf} (run skill-manifest-gen)")
+
     # 4. Universal smoke: --help must exit 0 cleanly (proves script imports + argparse wired)
     rc, stdout, stderr, duration_ms = _run_script(script, ["--help"])
     if rc != 0:

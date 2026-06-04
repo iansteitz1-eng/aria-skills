@@ -1,0 +1,2 @@
+# session-cabinet has no runtime dependencies — pure Python stdlib only.
+# Python 3.8+ required (uses pathlib, datetime.fromisoformat, etc.).

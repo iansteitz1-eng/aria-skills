@@ -51,30 +51,45 @@ if ENV_FILE.exists():
 
 sys.path.insert(0, "/opt/aria")
 
+# Soft imports — deferred so `--help`/discovery work without runtime deps
+# installed. The actual run gates on these via _require_deps() in main(), AFTER
+# argparse has handled --help (which exits 0 before the runtime work begins).
 try:
     import yaml
 except ImportError:
-    sys.stderr.write("FATAL: PyYAML not installed.\n")
-    sys.exit(1)
-
+    yaml = None
 try:
     import httpx
 except ImportError:
-    sys.stderr.write("FATAL: httpx not installed.\n")
-    sys.exit(1)
-
+    httpx = None
 try:
     import psycopg2
     from psycopg2.extras import Json
 except ImportError:
-    sys.stderr.write("FATAL: psycopg2 not installed.\n")
-    sys.exit(1)
-
+    psycopg2 = None
+    Json = None
 try:
     from email_template import render_aria_email  # type: ignore
-except Exception as e:
-    sys.stderr.write(f"FATAL: cannot import email_template from /opt/aria: {e}\n")
-    sys.exit(1)
+except Exception:
+    render_aria_email = None
+
+
+def _require_deps() -> None:
+    """Fail with the original FATAL messages if a runtime dep is missing.
+    Called at the start of main()'s real work, never at import — so --help
+    stays clean (premortem: import-safety so discovery never crashes)."""
+    missing = []
+    if yaml is None:
+        missing.append("PyYAML")
+    if httpx is None:
+        missing.append("httpx")
+    if psycopg2 is None:
+        missing.append("psycopg2")
+    if render_aria_email is None:
+        missing.append("email_template (from /opt/aria)")
+    if missing:
+        sys.stderr.write("FATAL: missing dependencies: " + ", ".join(missing) + "\n")
+        sys.exit(1)
 
 
 _VAR_RE = re.compile(r"\{\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*\}\}")
@@ -286,6 +301,7 @@ def main() -> int:
         help="Override standing CC-Ian rule (logged in meta)",
     )
     args = ap.parse_args()
+    _require_deps()  # runtime deps checked here, not at import (keeps --help clean)
 
     cfg = _load_config(Path(args.config))
     mode = _resolve_mode(cfg.get("mode"), args.prod)
