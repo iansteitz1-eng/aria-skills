@@ -1,0 +1,36 @@
+{
+  "name": "screen-describe",
+  "description": "Ask your local Claude what's on your screen. Captures the macOS screen, hands the image to your own `claude` CLI (your Pro/Max, no API key — BYOK), prints a short description, and deletes the screenshot immediately. Read-only — it looks, never controls. Use when the user says \"what's on my screen\", \"describe my screen\", \"what am I looking at\", or wants an AI second pair of eyes on their display.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "apply": {
+        "type": "boolean",
+        "description": "actually capture + describe (default: dry pre-flight)",
+        "default": false
+      },
+      "question": {
+        "type": "string",
+        "description": "what to ask about the screen"
+      },
+      "model": {
+        "type": "string",
+        "description": "claude model (default haiku)",
+        "default": "claude-haiku-4-5"
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}

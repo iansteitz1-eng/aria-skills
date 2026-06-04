@@ -1,0 +1,47 @@
+{
+  "name": "call-scrub",
+  "description": "Pull and analyze your ElevenLabs Conversational-AI voice calls — list recent conversations, or scrub one transcript to surface every tool the agent called, the result it got, errors, and timing. The fast way to debug \"why did that call misbehave\" without replaying audio. BYOK (your own ElevenLabs API key); read-only; stdlib only. Use when the user says \"scrub that call\", \"what happened on the call\", \"pull the call transcript\", \"debug the voice call\", \"what tools fired\".",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "conversation_id": {
+        "type": "string",
+        "description": "scrub one call's transcript + tool activity",
+        "default": ""
+      },
+      "agent_id": {
+        "type": "string",
+        "description": "filter the list to one agent",
+        "default": ""
+      },
+      "list": {
+        "type": "boolean",
+        "description": "list recent conversations (default)",
+        "default": false
+      },
+      "limit": {
+        "type": "integer",
+        "description": "how many to list (default 12)",
+        "default": 12
+      },
+      "api_key": {
+        "type": "string",
+        "description": "EL API key (else env ELEVENLABS_API_KEY)",
+        "default": ""
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}
