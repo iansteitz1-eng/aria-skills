@@ -1,0 +1,28 @@
+# ffmpeg-audio reconcile catalog — the voiceprint enroll roster.
+# Idempotent: re-run after adding a person; up-to-date clips are skipped.
+#   python3 ../ffmpeg_audio.py reconcile enroll_roster.yaml          # dry-run
+#   python3 ../ffmpeg_audio.py reconcile enroll_roster.yaml --apply  # execute
+#
+# Every output lands as mono 16 kHz pcm_s16le WAV (the TitaNet/whisper shape).
+jobs:
+  # Alice: trim a 22s window out of the latest superwhisper capture.
+  - op: trim
+    input: ~/superwhisper/recordings/2026-06-05/output.wav
+    start: 0
+    duration: 22
+    output: ~/enroll/alice.wav
+
+  # Bob / Carol: straight normalize from whatever container they sent.
+  - op: normalize
+    input: ~/recordings/bob.m4a
+    output: ~/enroll/bob.wav
+  - op: normalize
+    input: ~/recordings/carol.webm
+    output: ~/enroll/carol.wav
+
+  # Merge two short clips into one enrollment sample.
+  - op: concat
+    inputs:
+      - ~/clips/alice_a.wav
+      - ~/clips/alice_b.wav
+    output: ~/enroll/alice_merged.wav

@@ -1,0 +1,45 @@
+{
+  "type": "function",
+  "function": {
+    "name": "github_repo_deploy",
+    "description": "Reconcile a YAML catalog of GitHub repo metadata (description, homepage, topics) to the live GitHub account. Idempotent, --dry-run by default, --apply --prod for the live PATCH. Auth via `gh auth token` or GITHUB_TOKEN env. Refuses to change visibility (public/private) or default_branch without explicit override. Use when the user says \"polish my repos\", \"update GitHub descriptions\", \"tag my repos for discoverability\", \"fix repo metadata\", or before any campaign that drives traffic to GitHub. Single-command alternative to clicking through every repo's settings page.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "string",
+          "description": "Path to the github_repos.yaml catalog."
+        },
+        "apply": {
+          "type": "boolean",
+          "description": "Hit the GitHub API; default is dry-run.",
+          "default": false
+        },
+        "prod": {
+          "type": "boolean",
+          "description": "Live mode confirmation.",
+          "default": false
+        },
+        "owner": {
+          "type": "string",
+          "description": "GitHub user/org owner filter."
+        },
+        "repo": {
+          "type": "string",
+          "description": "Single repo to operate on (skip the rest)."
+        }
+      },
+      "required": []
+    }
+  },
+  "_aria_meta": {
+    "harness": "openai",
+    "compatible_with": [
+      "openai-gpt",
+      "openai-codex",
+      "xai-grok"
+    ],
+    "skill_name": "github-repo-deploy",
+    "source_of_truth": "../SKILL.md"
+  }
+}

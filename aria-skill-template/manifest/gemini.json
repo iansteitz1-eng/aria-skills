@@ -1,0 +1,42 @@
+{
+  "function_declarations": [
+    {
+      "name": "aria_skill_template",
+      "description": "Scaffolds a new aria-skills-pattern skill from a template. Generates README.md + SKILL.md + script.py with reconcile-loop stubs + config.yaml + requirements.txt \u2014 a fully-formed skill directory ready to fill in with vendor-specific logic. Multiplies contributor velocity. Use when the user says \"scaffold a new skill\", \"create a skill for X\", \"new skill template\", \"I want to build a skill for <vendor>\", or starting any new vendor integration.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "config": {
+            "type": "string",
+            "description": "Path to the template's YAML config file."
+          },
+          "apply": {
+            "type": "boolean",
+            "description": "Write the scaffolded skill directory. Defaults to dry-run.",
+            "default": false
+          },
+          "force": {
+            "type": "boolean",
+            "description": "Overwrite an existing skill directory at the target.",
+            "default": false
+          },
+          "prod": {
+            "type": "boolean",
+            "description": "Required for live mode; same gate as the other Aria skills.",
+            "default": false
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "_aria_meta": {
+    "harness": "google-gemini",
+    "compatible_with": [
+      "gemini-1.5",
+      "gemini-2.x"
+    ],
+    "skill_name": "aria-skill-template",
+    "source_of_truth": "../SKILL.md"
+  }
+}

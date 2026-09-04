@@ -1,0 +1,5 @@
+# ffmpeg-audio's four ops (normalize/trim/concat/probe) are pure Python stdlib.
+# `reconcile` (YAML catalog mode) needs PyYAML:
+pyyaml>=6.0
+# System packages (NOT pip) — must be on PATH:
+#   ffmpeg, ffprobe  (macOS: brew install ffmpeg · Ubuntu: apt-get install -y ffmpeg)

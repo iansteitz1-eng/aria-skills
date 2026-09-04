@@ -1,0 +1,57 @@
+{
+  "name": "premortem",
+  "description": "The DVE/GVE prosthetic premortem reflex — before writing, changing, debugging, or deploying code, briefly imagine how the decision could fail and turn that into an ARTIFACT (predicted failure modes → cheapest guard → predicted-vs-actual ledger), not just talk. Use before any risky change or deploy, or when the user says \"premortem\", \"how could this fail\", \"what's the risk\", \"/premortem\", \"/dve\". The operational core of the DVE Guidebook tool.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "decision": {
+        "type": "string",
+        "description": "one line: the decision being made (e.g. 'Deploy X to the live gateway')"
+      },
+      "phase": {
+        "type": "string",
+        "description": "lifecycle phase the decision sits in (default: implementation)",
+        "default": "implementation"
+      },
+      "failure": {
+        "type": "string",
+        "description": "a predicted failure mode; repeatable, one ledger row each"
+      },
+      "rows": {
+        "type": "integer",
+        "description": "empty rows to leave when no --failure is given (default: 4)",
+        "default": 4
+      },
+      "out": {
+        "type": "string",
+        "description": "ledger file appended to with --apply (default: notes/premortem.md)",
+        "default": "notes/premortem.md"
+      },
+      "apply": {
+        "type": "boolean",
+        "description": "append the block to --out (default: print only)",
+        "default": false
+      },
+      "json": {
+        "type": "boolean",
+        "description": "emit the block as JSON instead of markdown",
+        "default": false
+      }
+    },
+    "required": [
+      "decision"
+    ],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "type": "function",
+  "function": {
+    "name": "headless_claude",
+    "description": "Run the `claude` CLI fast, with your hooks skipped, and unattended for automation — wraps `claude -p` with --setting-sources project (skip your user hooks + heavy auto-memory, ~2s not ~15s), --permission-mode bypassPermissions (no interactive approval prompt that would block a script), and a neutral cwd. Uses your own plan, no API key. Use when the user says \"run claude headless\", \"scriptable claude\", \"claude -p keeps hanging / prompting\", \"call claude from a cron/agent\", or is automating Claude Code.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "description": "the prompt (quote it)"
+        },
+        "apply": {
+          "type": "boolean",
+          "description": "actually run (default: print the command)",
+          "default": false
+        },
+        "model": {
+          "type": "string",
+          "description": "model (default haiku for speed)",
+          "default": "claude-haiku-4-5"
+        },
+        "cwd": {
+          "type": "string",
+          "description": "working dir (default: a neutral temp dir)",
+          "default": ""
+        },
+        "allow_hooks": {
+          "type": "boolean",
+          "description": "DON'T pass --setting-sources project (load user hooks)",
+          "default": false
+        },
+        "safe": {
+          "type": "boolean",
+          "description": "DON'T bypass permissions (let it prompt)",
+          "default": false
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "seconds (default 180)",
+          "default": 180
+        }
+      },
+      "required": [
+        "prompt"
+      ]
+    }
+  }
+}

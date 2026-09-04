@@ -1,0 +1,1 @@
+# aria-skill-candidates is pure Python stdlib — no external deps.

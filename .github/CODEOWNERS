@@ -1,0 +1,5 @@
+# CODEOWNERS - aria-skills (aria-skills)
+# Every path is owned by the InsyncTech maintainers. Pull requests need a review from an owner.
+# After the org transfer this line becomes: * @InsyncTech/maintainers
+
+* @iansteitz1-eng

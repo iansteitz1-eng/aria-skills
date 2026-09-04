@@ -1,0 +1,55 @@
+{
+  "type": "function",
+  "function": {
+    "name": "ffmpeg_audio",
+    "description": "The prod audio convention made declarative — coerce any container (.m4a/.mp3/.webm/.wav) to mono 16 kHz signed-16-bit PCM WAV (`-ac 1 -ar 16000 -c:a pcm_s16le`), the input shape voiceprint, diarization, whisper, and training pipelines expect. Four ops (normalize · trim · concat · probe) plus a YAML reconcile mode. Idempotent, dry-run by default (nothing runs without --apply). Use when the user says \"normalize this audio\", \"make a 16k wav\", \"extract an enroll clip\", \"convert to mono 16k\", \"prep audio for whisper/diarization\", or \"batch-convert these recordings\".",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "json": {
+          "type": "boolean",
+          "description": "machine-readable output",
+          "default": false
+        },
+        "apply": {
+          "type": "boolean",
+          "description": "actually run ffmpeg (default: dry-run)",
+          "default": false
+        },
+        "force": {
+          "type": "boolean",
+          "description": "rebuild even if output is up-to-date",
+          "default": false
+        },
+        "inputs": {
+          "type": "string"
+        },
+        "o": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string",
+          "default": ".clip.wav"
+        },
+        "start": {
+          "type": "number",
+          "description": "start seconds"
+        },
+        "duration": {
+          "type": "number",
+          "description": "clip length seconds"
+        },
+        "catalog": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "inputs",
+        "inputs",
+        "inputs",
+        "inputs",
+        "catalog"
+      ]
+    }
+  }
+}

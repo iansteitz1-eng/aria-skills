@@ -1,0 +1,42 @@
+{
+  "function_declarations": [
+    {
+      "name": "skill_manifest_gen",
+      "description": "Generate cross-harness discovery manifests (openai.json · gemini.json · mcp.json + README) so an aria-skill is findable from OpenAI/Codex/Grok, Google Gemini, and MCP clients (VS Code, Cursor, Claude Desktop) — not just Claude Code. Derived deterministically from SKILL.md + the script's argparse, so manifests never drift. --all sweeps the repo, --check is a CI drift gate, --force overwrites. Use when Ian says \"generate manifests\", \"MCP marketplace\", \"discoverable in VS Code/Cursor\", \"backfill manifests\", or after adding a skill.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "skill_dir": {
+            "type": "string",
+            "description": "path to one skill dir"
+          },
+          "all": {
+            "type": "boolean",
+            "description": "every skill dir under --repo-root",
+            "default": false
+          },
+          "repo_root": {
+            "type": "string",
+            "description": "repo root for --all (default .)",
+            "default": "."
+          },
+          "check": {
+            "type": "boolean",
+            "description": "report missing/stale, write nothing (exit 2 if any)",
+            "default": false
+          },
+          "force": {
+            "type": "boolean",
+            "description": "overwrite an existing manifest/ (default: skip existing)",
+            "default": false
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "_aria_meta": {
+    "harness": "google-gemini",
+    "source_of_truth": "../SKILL.md"
+  }
+}

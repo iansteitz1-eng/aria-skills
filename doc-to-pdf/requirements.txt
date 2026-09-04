@@ -1,0 +1,2 @@
+# optional, improves Markdown fidelity
+markdown>=3.4

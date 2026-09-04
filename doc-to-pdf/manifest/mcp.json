@@ -1,0 +1,49 @@
+{
+  "name": "doc-to-pdf",
+  "description": "Render a Markdown or HTML document into a clean, branded, multi-page PDF via headless Chrome — the polished deliverable you'd hand a client, not a screenshot. Brand wrap (print-CSS + footer) is on by default; --no-brand for raw; --template for a custom shell. Never overwrites without --force. Use when the user says \"make a PDF\", \"turn this into a PDF\", \"PDF this\", \"send them a PDF\", \"build a client doc\", \"export to PDF\", \"branded PDF\".",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "input": {
+        "type": "string",
+        "description": "Input .md or .html file"
+      },
+      "o": {
+        "type": "string",
+        "description": "Output .pdf path (default: input name + .pdf)"
+      },
+      "title": {
+        "type": "string",
+        "description": "Document title (used by the brand template)",
+        "default": ""
+      },
+      "no_brand": {
+        "type": "boolean",
+        "description": "Skip the brand wrap (use the HTML as-is)",
+        "default": false
+      },
+      "template": {
+        "type": "string",
+        "description": "Custom HTML template with {{title}} and {{content}} placeholders"
+      },
+      "force": {
+        "type": "boolean",
+        "description": "Overwrite the output PDF if it exists",
+        "default": false
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "function_declarations": [
+    {
+      "name": "live_code_watch",
+      "description": "Watch a git repo's working diff get written live — a terminal that redraws ONLY when the code changes (no idle flicker), with brand-new files shown inline via intent-to-add. Point it at a repo while an AI agent (or you) edits and watch the raw code appear line by line. Zero deps beyond git. Use when the user says \"watch the code\", \"show me the live diff\", \"watch this repo change\", or wants to see edits happen in real time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "path to the git repo (default: .)",
+            "default": "."
+          },
+          "watch": {
+            "type": "boolean",
+            "description": "live loop (redraw on change)",
+            "default": false
+          },
+          "interval": {
+            "type": "number",
+            "description": "poll seconds (default 1.0)",
+            "default": 1.0
+          },
+          "max_iterations": {
+            "type": "integer",
+            "description": "stop after N redraws (0=forever)",
+            "default": 0
+          },
+          "max_lines": {
+            "type": "integer",
+            "description": "diff lines to show (default 600)",
+            "default": 600
+          },
+          "no_color": {
+            "type": "boolean",
+            "description": "disable ANSI color",
+            "default": false
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "_aria_meta": {
+    "harness": "google-gemini",
+    "source_of_truth": "../SKILL.md"
+  }
+}

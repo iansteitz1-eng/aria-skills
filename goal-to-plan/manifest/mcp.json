@@ -1,0 +1,90 @@
+{
+  "name": "goal-to-plan",
+  "description": "Turn a vague/ambiguous ask into an agent-ready plan — the \"quality of the brief\" discipline an AI-native team runs on. Emits a spec_charter (mission · scope · ONE acceptance criterion · risks) + a ready-to-dispatch lane brief (role · owned files · acceptance · report protocol), chaining the premortem + sprint-scaffold skills. Use when the user says \"plan this\", \"turn this into a brief\", \"scope this out\", \"make this agent-ready\", \"what's the plan for X\", \"goal to plan\", \"/goal-to-plan\", or before dispatching a lane / starting multi-step work from a fuzzy goal.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "goal": {
+        "type": "string",
+        "description": "the outcome in one sentence"
+      },
+      "acceptance": {
+        "type": "string",
+        "description": "the one objective, testable bar that defines done"
+      },
+      "title": {
+        "type": "string",
+        "description": "charter title (default: the goal)"
+      },
+      "scope_in": {
+        "type": "string",
+        "description": "something explicitly in scope; repeatable"
+      },
+      "scope_out": {
+        "type": "string",
+        "description": "something explicitly out of scope for now; repeatable"
+      },
+      "skill": {
+        "type": "string",
+        "description": "an installed skill the agent should use; repeatable"
+      },
+      "tool": {
+        "type": "string",
+        "description": "a concrete surface the agent will touch (CLI, API, DB, endpoint); repeatable"
+      },
+      "context": {
+        "type": "string",
+        "description": "a file, directory, or note the agent must read; repeatable"
+      },
+      "deny": {
+        "type": "string",
+        "description": "a path or area the agent must not touch; repeatable"
+      },
+      "risk": {
+        "type": "string",
+        "description": "premortem row as 'failure|blast radius|likelihood|guard'; repeatable"
+      },
+      "verification": {
+        "type": "string",
+        "description": "how the bar is proven in-product"
+      },
+      "role": {
+        "type": "string",
+        "description": "one-line role for the dispatch block"
+      },
+      "owned_file": {
+        "type": "string",
+        "description": "a file the agent owns exclusively (the file-lock contract); repeatable"
+      },
+      "report": {
+        "type": "string",
+        "description": "what to report back and when (default: on green, or on the first blocker)"
+      },
+      "write": {
+        "type": "string",
+        "description": "also save the brief to this path (directories are created)"
+      },
+      "json": {
+        "type": "boolean",
+        "description": "emit the two artifacts as JSON",
+        "default": false
+      }
+    },
+    "required": [
+      "goal",
+      "acceptance"
+    ],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}

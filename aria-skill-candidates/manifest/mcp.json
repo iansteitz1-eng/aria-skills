@@ -1,0 +1,39 @@
+{
+  "name": "aria-skill-candidates",
+  "description": "Observer + Gatekeeper for the Aria Builders meta-loop. Scans Claude Code transcripts for recurring vendor-API patterns and ranks them by a 5-axis rubric (recurrence \u00b7 YAML-shape \u00b7 multi-step \u00b7 public-value \u00b7 sovereignty-cost) to decide which patterns should become new skills. Filters out vendors already covered by an existing skill. Use when the user says \"what should I build next\", \"skill candidates\", \"where am I repeating myself\", \"scan transcripts\", or weekly as a passive review.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "json": {
+        "type": "boolean",
+        "description": "Emit JSON output instead of the text table.",
+        "default": false
+      },
+      "skills_dir": {
+        "type": "string",
+        "description": "Override the directory holding existing skills."
+      },
+      "transcripts": {
+        "type": "string",
+        "description": "Override the directory holding Claude Code transcripts to scan."
+      },
+      "limit_files": {
+        "type": "integer",
+        "description": "Limit the scan to N most-recent transcript files."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}

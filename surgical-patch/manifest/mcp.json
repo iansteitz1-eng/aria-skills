@@ -1,0 +1,50 @@
+{
+  "name": "surgical-patch",
+  "description": "Drift-safe editor for a hot, shared, possibly-remote file (e.g. prod main.py that's AHEAD of your local checkout). Applies a data-driven list of exact-match edits with three guarantees — idempotent (sentinel no-op), exact (every anchor must match a precise count or it aborts writing nothing), and reversible (timestamped backup + verify-or-rollback). Works locally or over ssh. Use when Ian says \"patch the live file\", \"surgically edit main.py\", \"apply this change to prod without clobbering\", \"the server file is ahead of mine\", or before any edit to a shared file multiple lanes touch.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "edits": {
+        "type": "string",
+        "description": "JSON file: {sentinel?, verify?, edits:[{old,new,count?}]}"
+      },
+      "path": {
+        "type": "string",
+        "description": "absolute path to the target file (on --host if remote)"
+      },
+      "host": {
+        "type": "string",
+        "description": "ssh host (omit for a local file)"
+      },
+      "ts": {
+        "type": "string",
+        "description": "backup timestamp dir name (default: ask the remote/local clock)"
+      },
+      "dry_run": {
+        "type": "boolean",
+        "description": "assert + preview only; write nothing",
+        "default": false
+      },
+      "env_file": {
+        "type": "string",
+        "description": "env file sourced on --host before verify (default: $SURGICAL_PATCH_ENV_FILE, else the built-in fallback named in README.md; pass '' to skip)"
+      }
+    },
+    "required": [
+      "edits",
+      "path"
+    ],
+    "additionalProperties": false
+  },
+  "_aria_meta": {
+    "harness": "mcp",
+    "spec_version": "2024-11-05",
+    "compatible_with": [
+      "claude-desktop",
+      "claude-code",
+      "cursor",
+      "any-mcp-aware-client"
+    ],
+    "source_of_truth": "../SKILL.md"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "function_declarations": [
+    {
+      "name": "sprint_scaffold",
+      "description": "Scaffold a new sprint folder with the Filing Cabinet spec_charter.md + Flowstate .claude/agents/pr-review.md + reference/sql/ subdirs. Use when starting a new sprint (e.g. \"open sprint 021\", \"start a sprint for X\", \"new sprint folder\"). Drops a working skeleton in ./sprints/NNN_slug/ with the load-bearing files pre-filled so every shipped item gets an audit-trail home. Validated over a two-terminal sprint that shipped 20+ items under this pattern.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "sprint_number": {
+            "type": "string",
+            "description": "Zero-padded sprint number (e.g. 022)."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Lowercase underscore slug (e.g. builder_meta)."
+          },
+          "dest": {
+            "type": "string",
+            "description": "Parent directory for the sprint folder.",
+            "default": "./sprints"
+          }
+        },
+        "required": [
+          "sprint_number",
+          "slug"
+        ]
+      }
+    }
+  ],
+  "_aria_meta": {
+    "harness": "google-gemini",
+    "source_of_truth": "../SKILL.md"
+  }
+}

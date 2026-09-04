@@ -1,0 +1,53 @@
+{
+  "function_declarations": [
+    {
+      "name": "video_ingest",
+      "description": "Pull metadata + transcript from any YouTube, Instagram, X/Twitter, TikTok, Vimeo, or other yt-dlp-supported video URL so Claude can actually \"watch\" it. Use when the user pastes a video link and asks \"watch this\", \"what's this video about\", \"summarize this\", \"let's talk about this video\", or any time a URL points at video content. First tries subtitles (fast, no GPU). Optional `--whisper` fallback transcribes audio locally via faster-whisper.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "whisper": {
+            "type": "boolean",
+            "description": "Fall back to local faster-whisper if subtitles are missing.",
+            "default": false
+          },
+          "timestamps": {
+            "type": "boolean",
+            "description": "Keep [hh:mm:ss] markers in the transcript (subtitles only).",
+            "default": false
+          },
+          "lang": {
+            "type": "string",
+            "description": "Subtitle language root (default: en).",
+            "default": "en"
+          },
+          "no_cache": {
+            "type": "boolean",
+            "description": "Bypass /tmp cache.",
+            "default": false
+          },
+          "json": {
+            "type": "boolean",
+            "description": "Emit raw JSON.",
+            "default": false
+          },
+          "brief": {
+            "type": "boolean",
+            "description": "Truncate description + transcript.",
+            "default": false
+          }
+        },
+        "required": [
+          "url"
+        ]
+      }
+    }
+  ],
+  "_aria_meta": {
+    "harness": "google-gemini",
+    "source_of_truth": "../SKILL.md"
+  }
+}
